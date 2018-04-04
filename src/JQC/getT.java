@@ -4,7 +4,7 @@
 package JQC;
 
 import Function.Mainfunction;
-import JQC.getdata.datakHF;
+import JQC.GetData.datakHF;
 import java.util.Map;
 
 /**

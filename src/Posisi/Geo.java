@@ -17,7 +17,6 @@ public class Geo {
     Mainfunction master;
 
     public class datageo {
-
         public String[] atom;  //atom's name
         public int[] numProton; //number electron or proton each atom
         public double[][] R;   //atom position
@@ -104,7 +103,6 @@ public class Geo {
         data.put("C", C);
         
         this.data = data;
-
     }
 
     public double energi(datageo v) {

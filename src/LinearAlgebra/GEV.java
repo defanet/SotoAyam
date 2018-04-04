@@ -1,6 +1,3 @@
-/**
- * 
- */
 package LinearAlgebra;
 
 import Jama.CholeskyDecomposition;
