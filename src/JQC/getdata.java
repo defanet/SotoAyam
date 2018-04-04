@@ -10,11 +10,11 @@ import java.util.Map;
  *
  * @author Agung Danu Wijaya
  */
-public class GetData {
+public class getdata {
 
     Mainfunction master;
 
-    public GetData(Mainfunction master) {
+    public getdata(Mainfunction master) {
         this.master = master;
     }
 
@@ -25,13 +25,15 @@ public class GetData {
         public double[] c;
         public double[] l;
         public double[] alpa;
+        public double batom;
 
-        public datakHF(String discribe, double[] R, double[] c, double[] l, double[] alpa) {
+        public datakHF(String discribe, double[] R, double[] c, double[] l, double[] alpa, double batom) {
             this.discibe = discribe;
             this.R = R;
             this.c = c;
             this.l = l;
             this.alpa = alpa;
+            this.batom = batom;
         }
     }
 
@@ -55,7 +57,7 @@ public class GetData {
                     exp[i] = coefexp[i][0];
                 }
                 for (int i = 0; i < lmn.length; i++) {
-                    datahf.put(index, new datakHF(batom[k] + " " + naom[k] + " " + kulit, R[k], coef, lmn[i], exp));
+                    datahf.put(index, new datakHF(batom[k] + " " + naom[k] + " " + kulit, R[k], coef, lmn[i], exp, batom[k]));
                     index++;
                 }
             }
@@ -63,10 +65,10 @@ public class GetData {
         return datahf;
     }
 
-    public static void main(String[] args) {
+      public static void main(String[] args) {
         Mainfunction a = new Mainfunction();
-        GetData b = new GetData(a);
-        Map<Integer, datakHF> datahf = b.get("H2O");
+        getdata b = new getdata(a);
+        Map<Integer, datakHF> datahf = b.get("He");
         for (int i = 0; i < datahf.size(); i++) {
             a.matrixOp.disp(datahf.get(i).discibe);
             a.matrixOp.disp(datahf.get(i).R);

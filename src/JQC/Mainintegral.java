@@ -1,20 +1,23 @@
 package JQC;
 
 import Function.*;
-import JQC.GetData.datakHF;
+import JQC.getdata.datakHF;
 import Posisi.Geo;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author Agung Danu Wijaya
  */
-public class MainIntegral {
+public class Mainintegral {
 
     int s = 0;
     int ak;
     int akk;
+    int ak1;
+    int akk1;
     public double ints[][][][];
     public double[][] EV;
     public double[][] EK;
@@ -22,7 +25,7 @@ public class MainIntegral {
     Mainfunction master;
     LinkedList<int[]> uniq;
 
-    public MainIntegral(Mainfunction master) {
+    public Mainintegral(Mainfunction master) {
         this.master = master;
         uniq = new LinkedList();
         int[] def = {-1, -1, -1, -1};
@@ -30,32 +33,45 @@ public class MainIntegral {
     }
 
     public void one(String nama) {
+        Counter1 con = new Counter1();
         Geo.datageo geo = master.geo.data.get(nama);
         double[][] R = geo.R;
         int[] Zp = geo.numProton;
         Map<Integer, datakHF> datahf = master.gdata.get(nama);
-        getV AE = new getV(master);
+        //getV AE = new getV(master);
         getS den = new getS(master);
         getT ki = new getT(master);
         int N = datahf.size();
+        System.out.println(N);
         double[][] EV = new double[N][N];                                       //energi potensial nuclie 3.152
+        this.EV = EV;
         double[][] EK = new double[N][N];                                       //energi Kinetik 3.151
         double[][] S = new double[N][N];                                        //S --> overlap orthogonal [1,0] 3.136
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 for (int k = 0; k < geo.numProton.length; k++) {
-                    EV[i][j] += AE.getV(datahf.get(i), datahf.get(j), R[k]) * Zp[k];
+                    // EV[i][j] += AE.getV(datahf.get(i), datahf.get(j), R[k]) * Zp[k];
+                    ak1++;
+                    while (Thread.activeCount() > 2000) {
+                    }
+                    Thread r = new worker1(con, datahf.get(i), datahf.get(j), R[k], i, j, Zp[k]);
+                    r.start();
                 }
                 S[i][j] = den.getS(datahf.get(i), datahf.get(j)); //3.136
                 EK[i][j] = ki.getEK(datahf.get(i), datahf.get(j));
             }
         }
-        this.EV = EV;
+        while (ak1 != akk1) {
+            String h = (ak + " " + akk + " " + Thread.activeCount());
+        }
+
         this.EK = EK;
         this.S = S;
+
     }
 
     public class Counter {
+
         public synchronized void input(double R, int i, int j, int k, int l) {
             ints[i][j][k][l] = ints[j][i][k][l] = ints[i][j][l][k] = ints[j][i][l][k]
                     = ints[k][l][i][j] = ints[l][k][i][j] = ints[k][l][j][i]
@@ -65,6 +81,7 @@ public class MainIntegral {
     }
 
     public class worker extends Thread {
+
         datakHF a, b, c, d;
         int i, j, k, l;
         Counter e;
@@ -88,6 +105,40 @@ public class MainIntegral {
         }
     }
 
+    public class Counter1 {
+
+        public synchronized void input(double NAI, int i, int j) {
+            //System.err.println(i+" "+j);
+            EV[i][j] += NAI;
+            akk1++;
+        }
+    }
+
+    public class worker1 extends Thread {
+
+        datakHF a, b;
+        Counter1 e;
+        double R[];
+        int i, j;
+        double atom;
+
+        public worker1(Counter1 e, datakHF a, datakHF b, double R[], int i, int j, double atom) {
+            this.a = a;
+            this.b = b;
+            this.R = R;
+            this.e = e;
+            this.i = i;
+            this.j = j;
+            this.atom = atom;
+        }
+
+        public void run() {
+            getV AE = new getV(master);
+            double NAI = AE.getV(a, b, R) * atom;
+            e.input(NAI, i, j);
+        }
+    }
+
     public void two(String nama) throws InterruptedException {
         getG ER = new getG(master);
         String a = "";
@@ -106,7 +157,7 @@ public class MainIntegral {
                         if (cek[i][j][k][l] == 0) {
                             ak++;
                             //jangan melebihi batas thread
-                            while (Thread.activeCount() > 800) {
+                            while (Thread.activeCount() > 2000) {
                             }
                             Thread r = new worker(con, datahf.get(i), datahf.get(k), datahf.get(j), datahf.get(l), i, j, k, l);
                             r.start();
@@ -256,5 +307,4 @@ public class MainIntegral {
         return b;
     }
      */
-
 }

@@ -3,9 +3,11 @@ package JQC;
 import Function.*;
 import Jama.Matrix;
 import Posisi.Geo;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.logging.Level;
@@ -23,7 +25,7 @@ public class HartreeFock {
         this.master = master;
     }
 
-    public void RHF(String nama) throws IOException, ClassNotFoundException, InterruptedException {
+    public void RHF(String nama, int status) throws IOException, ClassNotFoundException, InterruptedException {
         master.intg.one(nama);
         Map<String, Geo.datageo> data = master.geo.data;
         double S[][] = master.intg.S;
@@ -31,22 +33,20 @@ public class HartreeFock {
         double V[][] = master.intg.EV;
         double H[][] = master.matrixOp.adddot(V, T);
         double C[][] = master.gev.gev(S, H);
-
-        //jika ingin load G dari data yang disimpan, harap dicoment
-        master.intg.two(nama);
-        double G[][][][] = master.intg.ints;
-
-        //load G dari data yang disimpan
-        /*double G[][][][] = null;
-        try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("/media/agung/Arbitrary/G"));
-            G = (double[][][][]) inputStream.readObject();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+        double G[][][][] = null;
+        if (status == 1) {
+            master.intg.two(nama);
+            G = master.intg.ints;
+        } else {
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("/media/ict/DataMaster/New folder/G"));
+                G = (double[][][][]) inputStream.readObject();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-         */
         double Cold[][];
         double kali = 0.6;
         int panjang = master.geo.tengah(data.get(nama));
@@ -61,18 +61,23 @@ public class HartreeFock {
         double P[][] = DB.getArray();
         double enold = 0;
         int stop = 0;
+        double alpha[] = {0.009, 0.0085, 0.002, 0.001};
+        double exponen[] = {0.1, 0.2, 0.3, 0.4};
         while (stop == 0) {
             double RP[][] = new double[S.length][S[0].length];
             for (int i = 0; i < S.length; i++) {
                 for (int j = 0; j < S.length; j++) {
                     for (int k = 0; k < S.length; k++) {
                         for (int l = 0; l < S.length; l++) {
-                            RP[i][j] += (2 * G[i][j][k][l] - G[i][k][j][l]) * P[k][l];
+                            double Ex = 0;
+                            for (int m = 0; m < alpha.length; m++) {
+                                Ex += alpha[m] * Math.pow(Math.pow(G[i][k][j][l], 2), exponen[m]);
+                            }
+                            RP[i][j] += (2 * G[i][j][k][l] - G[i][k][j][l] - Ex) * P[k][l];
                         }
                     }
                 }
             }
-
             double F[][] = master.matrixOp.adddot(H, RP);
             C = master.gev.gev(S, F);
             for (int i = 0; i < C.length; i++) {
@@ -93,11 +98,9 @@ public class HartreeFock {
                 enold = En;
             }
             System.out.println(En + master.geo.energi(data.get(nama)) + " " + master.geo.energi(data.get(nama)) + " " + master.matrixOp.sum(master.matrixOp.multiplydot(RP, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(T, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(V, P)));
-
         }
-
     }
-    
+
     //untuk simpan nilai G   
     public void RHFgetdata(String nama) throws ClassNotFoundException, InterruptedException {
         master.intg.one(nama);
@@ -109,7 +112,7 @@ public class HartreeFock {
         double G[][][][] = master.intg.ints;
         ObjectOutputStream outputStream;
         try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("/media/agung/Arbitrary/G"));
+            outputStream = new ObjectOutputStream(new FileOutputStream("/media/ict/DataMaster/New folder/G"));
             outputStream.writeObject(G);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,11 +126,13 @@ public class HartreeFock {
         Mainfunction main = new Mainfunction();
         HartreeFock HF = new HartreeFock(main);
         try {
-            HF.RHF("C6H6");
+            //HF.RHFgetdata("C6H6");
+            HF.RHF("CH4", 1);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        // System.out.println(Math.pow(2,1.2));
+        // System.out.println(Math.pow(2,1.2));
     }
 
 }

@@ -31,9 +31,6 @@ public class testing {
     }
 
     public void EK() {
-        //[1.1695961, [4, 2, 0], array([ 0.        ,  0.        ,  0.04851804]), 1.1695961, [4, 2, 0], array([ 0.        ,  0.        ,  0.04851804])]
-//0.0467585554147
-        //
         double a1 = 1.1695961;
         double a2 = 1.1695961;
         int l = 1;
@@ -47,18 +44,19 @@ public class testing {
     }
 
     public void NAI() {
-        double a1 = 1.1695961;
-        double a2 =1.1;
-        int l = 1;
-        int m = 2;
+        double a1 = 0.38389;
+        double a2 =0.38389;
+        int l = 0;
+        int m = 0;
         int n = 0;
         double l1[] = {l, m, n};
         double l2[] = {l, m, n};
-        double ra[] = {0., 0., 0.04851804};
-        double rb[] = {0., 0., 0.04851804};
+        double ra[] = {0., 0, 0};
+        double rb[] = {0, 0, 0};
         double rc[] = rb;
         double r = a.nai.NAI(a1, a2, l1, l2, ra, rb, rc);
         //System.err.println(r);
+        //r=a.naiN.NAIMC(a1, a2, l1, l2, ra, rb, rc);
         double r1 = a.naiN.NAI(a1, a2, l1, l2, ra, rb, rc);
         System.out.println("NAI A " + r + " NAI N " + r1);
     }

@@ -1,7 +1,7 @@
 package JQC;
 
 import Function.Mainfunction;
-import JQC.GetData.datakHF;
+import JQC.getdata.datakHF;
 
 /**
  *

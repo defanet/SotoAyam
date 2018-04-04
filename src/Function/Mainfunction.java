@@ -4,8 +4,8 @@ import Integral.*;
 import LinearAlgebra.*;
 import Posisi.*;
 import Basis.*;
-import JQC.MainIntegral;
-import JQC.GetData;
+import JQC.Mainintegral;
+import JQC.getdata;
 
 /**
  *
@@ -29,6 +29,6 @@ public class Mainfunction {
     public Pangkat pkt = new Pangkat();
     public Geo geo = new Geo(this);
     public Data basisdata = new Data();
-    public GetData gdata = new GetData(this);
-    public MainIntegral intg = new MainIntegral(this);
+    public getdata gdata = new getdata(this);
+    public Mainintegral intg = new Mainintegral(this);
 }
