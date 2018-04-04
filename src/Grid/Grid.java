@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  *
- * @author root
+ * @author Agung danu wijaya
  */
 public class Grid {
 
@@ -43,7 +43,7 @@ public class Grid {
 
              points.put(j, point1);
         }
-
+        //Pekerjaan selanjutnya
         becke_reweight_atoms d = new becke_reweight_atoms();
         d.becke_reweight_atoms(a, nama, points);
         //System.out.println((int)d.sbecke(3));
