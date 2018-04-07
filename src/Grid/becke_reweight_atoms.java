@@ -30,12 +30,13 @@ public class becke_reweight_atoms {
     Geo.datageo geo;
     double[][] R;
     int[] batoms;
+    Mainfunction master;
 
     public void becke_reweight_atoms(Mainfunction master, String nama, HashMap<Integer, HashMap<Integer, double[]>> points) {
+        this.master = master;
         this.geo = master.geo.data.get(nama);
         this.R = geo.R;
         this.batoms = geo.numProton;
-
         for (int j = 0; j < points.size(); j++) {
             for (int l = 0; l < points.get(j).size(); l++) {
                 double[] Ps = new double[R.length];
@@ -43,9 +44,14 @@ public class becke_reweight_atoms {
                     data atj = new data(R[i], batoms[i]);
                     Ps[i] = becke_atomic_grid_p(points.get(j).get(l), atj);
                 }
-                double  P = Ps[j]/master.matrixOp.sum(Ps);
-                //master.matrixOp.disp(Ps);
-                System.err.println(P);
+                double P = Ps[j] / master.matrixOp.sum(Ps);
+                double point[] = new double[3];
+                double pointc[] = points.get(j).get(l);
+                for (int i = 0; i < point.length; i++) {
+                    point[i] = pointc[i];
+                }
+                System.out.println(P);
+                points.get(j).put(l, master.matrixOp.multiplydot(point, P));
             }
         }
     }
@@ -58,20 +64,21 @@ public class becke_reweight_atoms {
         double rip = norm2(ati.R, xyz);
         for (int i = 0; i < R.length; i++) {
             data atj = new data(R[i], batoms[i]);
-            if (atj != ati) {
+            if (atj.R != ati.R) {
                 double rij = norm2(ati.R, atj.R);
                 double rjp = norm2(atj.R, xyz);
                 mu = (rip - rjp) / rij;
-            }
-            if (do_becke_hetero == true & ati.batom != atj.batom) {
-                double chi = f.Bragg[(int) ati.batom] / f.Bragg[(int) atj.batom];
-                double u = (chi - 1.) / (chi + 1.);
-                double a = u / (u * u - 1);
-                a = Math.min(a, 0.5);
-                a = Math.max(a, -0.5);
-                mu += a * (1 - mu * mu);
+                if (do_becke_hetero == true & ati.batom != atj.batom) {
+                    double chi = f.Bragg[(int) ati.batom] / f.Bragg[(int) atj.batom];
+                    double u = (chi - 1.) / (chi + 1.);
+                    double a = u / (u * u - 1);
+                    a = Math.min(a, 0.5);
+                    a = Math.max(a, -0.5);
+                    mu += a * (1 - mu * mu);
+                }
                 sprod *= sbecke(mu);
             }
+
         }
         return sprod;
     }
@@ -108,8 +115,7 @@ public class becke_reweight_atoms {
         this.geo = master.geo.data.get("H2O");
         this.R = geo.R;
         this.batoms = geo.numProton;
-        double V[] = {1.42296788, 0., -0.98120955};
-        data ati = new data(V, 1);
+        data ati = new data(R[1], batoms[1]);
         double xyz[] = {1.1, 1.2, 1.3};
         double d = becke_atomic_grid_p(xyz, ati);
         System.err.println(d);
@@ -118,5 +124,6 @@ public class becke_reweight_atoms {
     public static void main(String args[]) {
         becke_reweight_atoms a = new becke_reweight_atoms();
         a.test();
+        //System.out.println(a.sbecke(0.40235283557006146));
     }
 }
