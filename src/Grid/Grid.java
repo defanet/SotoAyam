@@ -22,7 +22,7 @@ public class Grid {
 
     public Grid(String nama, Mainfunction a) {
         Map<Integer, getdata.datakHF> datahf = a.gdata.get(nama);
-        Geo.datageo geo = a.geo.data.get("H2O");
+        Geo.datageo geo = a.geo.data.get(nama);
         String namaatom[] = geo.atom;
         for (int j = 0; j < namaatom.length; j++) {
             HashMap<Integer, double[]> point = new HashMap<>();

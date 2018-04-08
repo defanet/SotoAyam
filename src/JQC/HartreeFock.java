@@ -127,7 +127,7 @@ public class HartreeFock {
         HartreeFock HF = new HartreeFock(main);
         try {
             //HF.RHFgetdata("C6H6");
-            HF.RHF("CH4", 1);
+            HF.RHF("H2O", 1);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
         }

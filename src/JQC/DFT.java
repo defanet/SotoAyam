@@ -38,7 +38,7 @@ public class DFT {
         G = master.intg.ints;
 
         double Cold[][];
-        double kali = 0.6;
+        double kali = 0.5;
         int panjang = master.geo.tengah(data.get(nama));
         double D[][] = new double[C.length][panjang];
         for (int i = 0; i < C.length; i++) {
@@ -80,6 +80,7 @@ public class DFT {
             double alpha = 2.0 / 3.0;
             double fac = -2.25 * alpha * Math.pow(0.75 / Math.PI, 1. / 3.);
             double rho3[] = master.matrixOp.powdot(rho, 1. / 3.);
+            
             double fx[] = master.matrixOp.multiplydot(master.matrixOp.multiplydot(rho, rho3), fac);
             double dfxdna[] = master.matrixOp.multiplydot(rho3, (4. / 3.) * fac);
             HashMap<Integer, double[]> pointmap = a.pointsmap(points);
