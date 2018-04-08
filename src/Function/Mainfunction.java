@@ -6,6 +6,7 @@ import Posisi.*;
 import Basis.*;
 import JQC.Mainintegral;
 import JQC.getdata;
+import JQC.getpointvalue;
 
 /**
  *
@@ -31,4 +32,5 @@ public class Mainfunction {
     public Data basisdata = new Data();
     public getdata gdata = new getdata(this);
     public Mainintegral intg = new Mainintegral(this);
+    public getpointvalue gpoint = new getpointvalue(this);
 }

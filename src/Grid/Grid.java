@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  *
- * @author Agung danu wijaya
+ * @author root
  */
 public class Grid {
 
@@ -25,28 +25,46 @@ public class Grid {
         Geo.datageo geo = a.geo.data.get("H2O");
         String namaatom[] = geo.atom;
         for (int j = 0; j < namaatom.length; j++) {
-            HashMap<Integer, double[]> point1 = new HashMap<>();
             HashMap<Integer, double[]> point = new HashMap<>();
-            for (int i = 0; i < datahf.size(); i++) {
-                String h[] = (datahf.get(i).discibe).split(" ");
-                if (h[1].equals(namaatom[j])) {
-                    double batom = (datahf.get(i).batom);
-                    double[] xyz = (datahf.get(i).R);
-                    point = grd.rungrid(batom, xyz);
-                }
-                int in = point1.size();
-                for (int k = 0; k < point.size(); k++) {
-                    double data[] = point.get(k);
-                    point1.put(k + in, data);
-                }
-            }
-
-             points.put(j, point1);
+            double batom = geo.numProton[j];
+            double[] xyz = geo.R[j];
+            point = grd.rungrid(batom, xyz);
+            points.put(j, point);
         }
-        //Pekerjaan selanjutnya
         becke_reweight_atoms d = new becke_reweight_atoms();
         d.becke_reweight_atoms(a, nama, points);
-        //System.out.println((int)d.sbecke(3));
+    }
+
+    public double[][] setbfamps(Mainfunction master, Map<Integer, getdata.datakHF> bfs, HashMap<Integer, HashMap<Integer, double[]>> points) {
+        int nbf = bfs.size();
+        double[][] bfamps = new double[points.get(0).size() * points.size()][nbf];
+        for (int j = 0; j < nbf; j++) {
+            int index = 0;
+            for (int i = 0; i < points.size(); i++) {
+                for (int k = 0; k < points.get(i).size(); k++) {
+                    double R[] = new double[3];
+                    double RW[] = points.get(i).get(k);
+                    for (int l = 0; l < R.length; l++) {
+                        R[l] = RW[l];
+                    }
+                    bfamps[index][j] = master.gpoint.bf(bfs.get(j), R);
+                    index++;
+                }
+            }
+        }
+        return bfamps;
+    }
+
+    public HashMap<Integer, double[]> pointsmap(HashMap<Integer, HashMap<Integer, double[]>> points) {
+        HashMap<Integer, double[]> data = new HashMap<>();
+        int index = 0;
+        for (int i = 0; i < points.size(); i++) {
+            for (int k = 0; k < points.get(i).size(); k++) {
+                data.put(index, points.get(i).get(k));
+                index++;
+            }
+        }
+        return data;
     }
 
 }

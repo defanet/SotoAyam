@@ -45,13 +45,10 @@ public class becke_reweight_atoms {
                     Ps[i] = becke_atomic_grid_p(points.get(j).get(l), atj);
                 }
                 double P = Ps[j] / master.matrixOp.sum(Ps);
-                double point[] = new double[3];
-                double pointc[] = points.get(j).get(l);
-                for (int i = 0; i < point.length; i++) {
-                    point[i] = pointc[i];
-                }
-                System.out.println(P);
-                points.get(j).put(l, master.matrixOp.multiplydot(point, P));
+                double point[] = points.get(j).get(l);
+                point[3] *=P;
+                points.get(j).put(l,point);
+                //master.matrixOp.disp(points.get(j).get(l));
             }
         }
     }
