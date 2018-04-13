@@ -12,13 +12,13 @@ import java.util.HashMap;
 
 /**
  *
- * @author ict
+ * @author Agung Danu Wijaya
  */
 public class becke_reweight_atoms {
 
     public class data {
 
-        public double[] R;      //position atom
+        public double[] R;      
         public double batom;
 
         public data(double[] R, double batom) {
@@ -48,7 +48,6 @@ public class becke_reweight_atoms {
                 double point[] = points.get(j).get(l);
                 point[3] *=P;
                 points.get(j).put(l,point);
-                //master.matrixOp.disp(points.get(j).get(l));
             }
         }
     }
@@ -121,6 +120,5 @@ public class becke_reweight_atoms {
     public static void main(String args[]) {
         becke_reweight_atoms a = new becke_reweight_atoms();
         a.test();
-        //System.out.println(a.sbecke(0.40235283557006146));
     }
 }

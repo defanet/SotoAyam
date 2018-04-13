@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  *
- * @author root
+ * @author Agung Danu Wijaya
  */
 public class Lebedev {
 

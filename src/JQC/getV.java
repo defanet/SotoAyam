@@ -5,8 +5,6 @@ package JQC;
 
 import Function.Mainfunction;
 import JQC.getdata.datakHF;
-import Posisi.Geo;
-import java.util.Map;
 
 /**
  *

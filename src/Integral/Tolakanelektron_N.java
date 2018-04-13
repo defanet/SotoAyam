@@ -6,11 +6,11 @@ import Function.*;
  *
  * @author Agung Danu Wijaya
  */
-public class TolakanelektronN {
+public class Tolakanelektron_N {
 
     Mainfunction main;
 
-    public TolakanelektronN(Mainfunction main) {
+    public Tolakanelektron_N(Mainfunction main) {
         this.main = main;
     }
 

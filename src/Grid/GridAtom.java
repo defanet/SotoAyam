@@ -5,16 +5,15 @@
  */
 package Grid;
 
-import Function.Mainfunction;
 import java.util.HashMap;
 
 /**
  *
- * @author root
+ * @author Agung Danu Wijaya
  */
 public class GridAtom {
 
-    public  HashMap<Integer, double[]> rungrid(double batom, double[] R) {
+    public HashMap<Integer, double[]> rungrid(double batom, double[] R) {
         HashMap<Integer, double[]> point = new HashMap<>();
         Lebedev a = new Lebedev();
         double[][] grid_params = LegendreGrid(batom);
@@ -33,8 +32,6 @@ public class GridAtom {
                 wang = ds[3];
                 double w = wrad * wang;
                 double f[] = {rrad * xang + R[0], rrad * yang + R[1], rrad * zang + R[2], w};
-                //Mainfunction s=new Mainfunction();
-                //s.matrixOp.disp(f);
                 point.put(i++, f);
             }
         }
@@ -73,7 +70,6 @@ public class GridAtom {
         Bragg a = new Bragg();
         Legendre b = new Legendre();
         double Rmax = 0.5 * a.Bragg[(int) batom] * 1.889725989;
-        //System.err.println(a.Bragg[(int) batom]);
         double nrad = 32;
         double fineness = 1;
         double grid[][] = new double[(int) nrad][3];

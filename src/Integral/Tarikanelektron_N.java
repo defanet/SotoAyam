@@ -11,11 +11,11 @@ import Function.*;
  *
  * @author Agung Danu Wijaya
  */
-public class TarikanelektronN {
+public class Tarikanelektron_N {
 
     Mainfunction main;
 
-    public TarikanelektronN(Mainfunction main) {
+    public Tarikanelektron_N(Mainfunction main) {
         this.main = main;
     }
 

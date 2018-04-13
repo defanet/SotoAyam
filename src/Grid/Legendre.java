@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  *
- * @author root
+ * @author Agung Danu Wijaya
  */
 public class Legendre {
 
@@ -173,10 +173,11 @@ public class Legendre {
         this.data = data;
 
     }
-    public static  void main(String args[]){
-     Legendre b = new Legendre();
-     double [][]s=b.data.get(32);
-      System.err.println(s.length);
+
+    public static void main(String args[]) {
+        Legendre b = new Legendre();
+        double[][] s = b.data.get(32);
+        System.err.println(s.length);
     }
 
 }

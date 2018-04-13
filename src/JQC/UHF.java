@@ -12,23 +12,23 @@ import java.util.logging.Logger;
  *
  * @author Agung Danu Wijaya
  */
-public class HartreeFockURF {
+public class UHF {
 
     Mainfunction master;
 
-    public HartreeFockURF(Mainfunction master) {
+    public UHF(Mainfunction master) {
         this.master = master;
     }
 
-    public void URHF(String nama) throws IOException, ClassNotFoundException, InterruptedException {
-        master.intg.one(nama);
+    public void URHF(String geo) throws IOException, ClassNotFoundException, InterruptedException {
+        master.intg.one(geo);
         Map<String, Geo.datageo> data = master.geo.data;
         double S[][] = master.intg.S;
         double T[][] = master.intg.EK;
         double V[][] = master.intg.EV;
         double H[][] = master.matrixOp.adddot(V, T);
         double C[][] = master.gev.gev(S, H);
-        master.intg.two(nama);
+        master.intg.two(geo);
         double G[][][][] = master.intg.ints;
         double kali = 0.0;
         int panjangu = 5;
@@ -104,17 +104,17 @@ public class HartreeFockURF {
             } else {
                 enold = En;
             }
-            System.out.println(En + master.geo.energi(data.get(nama)));
+            System.out.println(En + master.geo.energi(data.get(geo)));
         }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Mainfunction main = new Mainfunction();
-        HartreeFockURF HF = new HartreeFockURF(main);
+        UHF HF = new UHF(main);
         try {
             HF.URHF("OH");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HartreeFockURF.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UHF.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -1,4 +1,4 @@
-package LinearAlgebra;
+package Tools;
 
 import Jama.CholeskyDecomposition;
 import Jama.EigenvalueDecomposition;

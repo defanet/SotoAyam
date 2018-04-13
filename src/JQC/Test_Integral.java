@@ -11,9 +11,9 @@ import Function.*;
  *
  * @author Agung Danu Wijaya
  */
-public class testing {
+public class Test_Integral {
 
-    Mainfunction a = new Mainfunction();
+    Mainfunction master = new Mainfunction();
 
     public void rapat() {
 
@@ -26,7 +26,7 @@ public class testing {
         double l2[] = {l, m, n};
         double ra[] = {0., 0., 0.0916858};
         double rb[] = {0., 0., 0.0916858};
-        double r = (a.rhoe.S(a1, a2, l1, l2, ra, rb));
+        double r = (master.rhoe.S(a1, a2, l1, l2, ra, rb));
         System.out.println("S " + r);
     }
 
@@ -40,7 +40,7 @@ public class testing {
         double l2[] = {l, m, n};
         double ra[] = {0., 0., 0.04851804};
         double rb[] = {0., 0., 0.04851804};
-        System.out.println("EK " + a.T.EK(a1, a2, l1, l2, ra, rb));
+        System.out.println("EK " + master.T.EK(a1, a2, l1, l2, ra, rb));
     }
 
     public void NAI() {
@@ -54,10 +54,10 @@ public class testing {
         double ra[] = {0., 0, 0};
         double rb[] = {0, 0, 0};
         double rc[] = rb;
-        double r = a.nai.NAI(a1, a2, l1, l2, ra, rb, rc);
+        double r = master.nai.NAI(a1, a2, l1, l2, ra, rb, rc);
         //System.err.println(r);
         //r=a.naiN.NAIMC(a1, a2, l1, l2, ra, rb, rc);
-        double r1 = a.naiN.NAI(a1, a2, l1, l2, ra, rb, rc);
+        double r1 = master.naiN.NAI(a1, a2, l1, l2, ra, rb, rc);
         System.out.println("NAI A " + r + " NAI N " + r1);
     }
 
@@ -77,14 +77,14 @@ public class testing {
         double rb[] = {0.0, 0.0, 0.0916858};
         double rc[] = {0.0, 0.0, 0.0916858};
         double rd[] = {0.0, 0.0, 0.0916858};
-        double r = a.eri.ERI(l1, l3, l2, l4, a1, a3, a2, a4, ra, rc, rb, rd);
+        double r = master.eri.ERI(l1, l3, l2, l4, a1, a3, a2, a4, ra, rc, rb, rd);
         System.err.println(r * Math.pow(1.7337440244052482, 4));
         //double r1 = specialFunc.eriN.ERI(l1, l2, l3, l4, a1, a2, a3, a4, ra, rb, rc, rd);
         //System.out.println("ERI A " + r+" ERI N " + r1*Math.pow(1.7337440244052482, 4));
     }
 
     public static void main(String[] args) {
-        testing run = new testing();
+        Test_Integral run = new Test_Integral();
         //run.rapat();
         //run.EK();
         run.NAI();

@@ -124,8 +124,8 @@ public class Geo {
     }
 
     public static void main(String[] args) {
-        Mainfunction main = new Mainfunction();
-        Geo geo = new Geo(main);
+        Mainfunction master = new Mainfunction();
+        Geo geo = new Geo(master);
         System.out.println(geo.tengah(geo.data.get("H2O")));
     }
 }

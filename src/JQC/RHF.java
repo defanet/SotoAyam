@@ -17,16 +17,16 @@ import java.util.logging.Logger;
  *
  * @author Agung Danu Wijaya
  */
-public class HartreeFock {
+public class RHF {
 
     Mainfunction master;
 
-    public HartreeFock(Mainfunction master) {
+    public RHF(Mainfunction master) {
         this.master = master;
     }
 
-    public void RHF(String nama, int status) throws IOException, ClassNotFoundException, InterruptedException {
-        master.intg.one(nama);
+    public void RHF(String geo, int status) throws IOException, ClassNotFoundException, InterruptedException {
+        master.intg.one(geo);
         Map<String, Geo.datageo> data = master.geo.data;
         double S[][] = master.intg.S;
         double T[][] = master.intg.EK;
@@ -35,21 +35,21 @@ public class HartreeFock {
         double C[][] = master.gev.gev(S, H);
         double G[][][][] = null;
         if (status == 1) {
-            master.intg.two(nama);
+            master.intg.two(geo);
             G = master.intg.ints;
         } else {
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("/media/ict/DataMaster/New folder/G"));
                 G = (double[][][][]) inputStream.readObject();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RHF.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RHF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         double Cold[][];
         double kali = 0.6;
-        int panjang = master.geo.tengah(data.get(nama));
+        int panjang = master.geo.tengah(data.get(geo));
         double D[][] = new double[C.length][panjang];
         for (int i = 0; i < C.length; i++) {
             for (int j = 0; j < panjang; j++) {
@@ -97,11 +97,10 @@ public class HartreeFock {
             } else {
                 enold = En;
             }
-            System.out.println(En + master.geo.energi(data.get(nama)) + " " + master.geo.energi(data.get(nama)) + " " + master.matrixOp.sum(master.matrixOp.multiplydot(RP, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(T, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(V, P)));
+            System.out.println(En + master.geo.energi(data.get(geo)) + " " + master.geo.energi(data.get(geo)) + " " + master.matrixOp.sum(master.matrixOp.multiplydot(RP, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(T, P)) + " " + 2 * master.matrixOp.sum(master.matrixOp.multiplydot(V, P)));
         }
     }
 
-    //untuk simpan nilai G   
     public void RHFgetdata(String nama) throws ClassNotFoundException, InterruptedException {
         master.intg.one(nama);
         master.intg.two(nama);
@@ -115,24 +114,21 @@ public class HartreeFock {
             outputStream = new ObjectOutputStream(new FileOutputStream("/media/ict/DataMaster/New folder/G"));
             outputStream.writeObject(G);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RHF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RHF.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Mainfunction main = new Mainfunction();
-        HartreeFock HF = new HartreeFock(main);
+        RHF HF = new RHF(main);
         try {
-            //HF.RHFgetdata("C6H6");
             HF.RHF("H2O", 1);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HartreeFock.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RHF.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // System.out.println(Math.pow(2,1.2));
-        // System.out.println(Math.pow(2,1.2));
     }
 
 }

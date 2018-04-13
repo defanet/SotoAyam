@@ -10,11 +10,11 @@ import Function.*;
  *
  * @author Agung Danu Wijaya
  */
-public class fk {
+public class Fk {
 
     Mainfunction ma;
 
-    public fk(Mainfunction ma) {
+    public Fk(Mainfunction ma) {
         this.ma = ma;
     }
 

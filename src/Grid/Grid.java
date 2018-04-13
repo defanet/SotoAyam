@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Setting grid untuk menghitung Exc dan Vxc
  */
 package Grid;
 
@@ -13,7 +11,7 @@ import java.util.Map;
 
 /**
  *
- * @author root
+ * @author Agung Danu Wijaya
  */
 public class Grid {
 
