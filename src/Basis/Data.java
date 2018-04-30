@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  *
  * @author Agung Danu Wijaya
+ * @author Dedy Farhamsa
  */
 public class Data {
 
