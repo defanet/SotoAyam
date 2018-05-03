@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Agung Danu Wijaya
+ * @author Agung Danu Wijaya, Farhamsa D
  */
 public class UHF {
 
