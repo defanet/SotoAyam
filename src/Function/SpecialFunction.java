@@ -1,7 +1,7 @@
 package Function;
 
 /**
- * Robert Sedgewick and Kevin Wayne Agung Danu Wijaya
+ * Robert Sedgewick and Kevin Wayne, Agung Danu Wijaya, Farhamsa D
  */
 public class SpecialFunction {
     
