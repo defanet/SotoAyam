@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  *
- * @author Agung Danu Wijaya
+ * @author Agung Danu Wijaya, Farhamsa D
  */
 public class Mainintegral {
 
